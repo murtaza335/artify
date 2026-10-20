@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.11.3
+
+- New logo: a shard-cut A with a paint splash and loose geometric shapes, in the Tile Night palette. It is the extension icon and appears at the top of the README.
+
 ## 0.11.2
 
 - Rewrote the README for the current features, with screenshots of the Explorer view and every Artify Play mode, a commands and settings table, and a link to the GitHub repository.

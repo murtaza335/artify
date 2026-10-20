@@ -2,9 +2,14 @@
   "name": "artify",
   "displayName": "Artify",
   "description": "Color themes and live abstract artwork for VS Code, plus Artify Play: endless shard art, puzzles, paint and a shape studio, all saveable, to play with while you wait.",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "publisher": "artify",
   "license": "MIT",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1B1016",
+    "theme": "dark"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/murtaza335/artify.git"

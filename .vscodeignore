@@ -5,3 +5,4 @@ scripts/**
 *_PLAN.md
 images/**
 *.vsix
+!images/icon.png

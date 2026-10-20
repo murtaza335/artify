@@ -1,5 +1,7 @@
 # Artify
 
+<img src="images/icon.png" alt="Artify logo: a shard-cut A with a paint splash and loose shapes" width="128" align="right">
+
 Two abstract-art color themes for VS Code, plus live shard artwork in the Explorer and **Artify Play**: endless generated art, puzzles, paint and a shape studio to play with while an agent or a long build is working.
 
 The palettes come from geometric tile posters and Bauhaus museum posters: teal, brick, ochre and cream on a maroon-ink ground, and sky blue, red and yellow on warm white.
