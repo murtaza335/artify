@@ -2,7 +2,7 @@
   "name": "artify",
   "displayName": "Artify",
   "description": "Color themes and live abstract artwork for VS Code, plus Artify Play: endless shard art, puzzles, paint and a shape studio, all saveable, to play with while you wait.",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "publisher": "artify",
   "license": "MIT",
   "repository": {

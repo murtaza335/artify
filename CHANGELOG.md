@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.11.2
+
+- Rewrote the README for the current features, with screenshots of the Explorer view and every Artify Play mode, a commands and settings table, and a link to the GitHub repository.
+
 ## 0.11.1
 
 - Anime and Cartoons are now one category, Anime & Cartoons. A `cartoons` value left in `artify.explorerShapes`, a saved design or a round in progress carries on in the merged category.
