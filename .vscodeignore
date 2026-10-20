@@ -3,3 +3,5 @@ scripts/**
 **/*.map
 .gitignore
 *_PLAN.md
+images/**
+*.vsix
