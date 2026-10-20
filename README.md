@@ -1,12 +1,12 @@
 # Artify
 
-<img src="images/icon.png" alt="Artify logo: a shard-cut A with a paint splash and loose shapes" width="128" align="right">
+<img src="https://raw.githubusercontent.com/murtaza335/artify/main/images/icon.png" alt="Artify logo: a shard-cut A with a paint splash and loose shapes" width="128" align="right">
 
 Two abstract-art color themes for VS Code, plus live shard artwork in the Explorer and **Artify Play**: endless generated art, puzzles, paint and a shape studio to play with while an agent or a long build is working.
 
 The palettes come from geometric tile posters and Bauhaus museum posters: teal, brick, ochre and cream on a maroon-ink ground, and sky blue, red and yellow on warm white.
 
-![Artify Play: pick a category and reform endless shard art](images/play-reform.png)
+![Artify Play: pick a category and reform endless shard art](https://raw.githubusercontent.com/murtaza335/artify/main/images/play-reform.png)
 
 ## Install
 
@@ -25,7 +25,7 @@ Every text color is checked against the surface it sits on, and each pair must r
 
 ## Artwork in the Explorer
 
-<img src="images/explorer-reform.png" alt="The Artify view in the Explorer showing a constructivist poster with Reform, Replay and Play buttons" width="360" align="right">
+<img src="https://raw.githubusercontent.com/murtaza335/artify/main/images/explorer-reform.png" alt="The Artify view in the Explorer showing a constructivist poster with Reform, Replay and Play buttons" width="360" align="right">
 
 An **Artify** view sits in the Explorer. It starts as a vase broken into geometric shards and follows your light or dark theme.
 
@@ -48,19 +48,19 @@ Endless shard art. Pick a category, press **Reform** or Space, or turn on auto-r
 
 ### Puzzle
 
-![Puzzle: drag the shards back into place](images/play-puzzle.png)
+![Puzzle: drag the shards back into place](https://raw.githubusercontent.com/murtaza335/artify/main/images/play-puzzle.png)
 
 The shards scatter and you drag them back where they belong. Pieces snap into place when they are close. A faint guide is optional, **Show answer** is there for keyboard users, and finished designs can be saved.
 
 ### Splash
 
-![Splash: throw paint on a canvas](images/play-splash.png)
+![Splash: throw paint on a canvas](https://raw.githubusercontent.com/murtaza335/artify/main/images/play-splash.png)
 
 Throw paint on a canvas. Drag to splash, hold still to pour a puddle, and watch the drips run. Number keys pick a color and C clears the canvas. Save the painting to your collection, reopen it later, or export it as PNG.
 
 ### Studio
 
-![Studio: build a design from shapes](images/play-studio.png)
+![Studio: build a design from shapes](https://raw.githubusercontent.com/murtaza335/artify/main/images/play-studio.png)
 
 Build your own design from a picker of shapes: circles, triangles, stars, arches, leaves, clouds, a sun, a house, a pine tree and more. Drag to move, use the round handles to resize and rotate, recolor from the theme palette, bring forward or send back, flip, duplicate, undo, and pick a background.
 

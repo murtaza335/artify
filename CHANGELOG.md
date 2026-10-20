@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.11.4
+
+- README images now load in the editor's extension page: they link straight to raw.githubusercontent.com instead of a GitHub redirect.
+
 ## 0.11.3
 
 - New logo: a shard-cut A with a paint splash and loose geometric shapes, in the Tile Night palette. It is the extension icon and appears at the top of the README.
