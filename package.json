@@ -1,0 +1,164 @@
+{
+  "name": "artify",
+  "displayName": "Artify",
+  "description": "Color themes and live abstract artwork for VS Code, plus Artify Play: endless shard art, puzzles, paint and a shape studio, all saveable, to play with while you wait.",
+  "version": "0.11.1",
+  "publisher": "artify",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "theme",
+    "color-theme",
+    "dark",
+    "light",
+    "abstract",
+    "bauhaus",
+    "geometric",
+    "art"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Artify Tile Night",
+        "uiTheme": "vs-dark",
+        "path": "./themes/artify-tile-night-color-theme.json"
+      },
+      {
+        "label": "Artify Bauhaus Day",
+        "uiTheme": "vs",
+        "path": "./themes/artify-bauhaus-day-color-theme.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "artify.openGallery",
+        "title": "Open Gallery",
+        "category": "Artify"
+      },
+      {
+        "command": "artify.reformVase",
+        "title": "Reform",
+        "category": "Artify",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "artify.play",
+        "title": "Play",
+        "category": "Artify"
+      },
+      {
+        "command": "artify.replay",
+        "title": "Replay Animation",
+        "category": "Artify",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "artify.newRound",
+        "title": "Start New Round",
+        "category": "Artify"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "artify.reformVase",
+          "when": "view == artify.vase",
+          "group": "navigation@1"
+        },
+        {
+          "command": "artify.replay",
+          "when": "view == artify.vase",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "artify-palette",
+          "title": "Palette",
+          "icon": "$(symbol-color)"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "artify.vase",
+          "name": "Artify",
+          "initialSize": 4
+        }
+      ],
+      "artify-palette": [
+        {
+          "type": "webview",
+          "id": "artify.palette",
+          "name": "Palette"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Artify",
+      "properties": {
+        "artify.explorerShapes": {
+          "type": "string",
+          "default": "all",
+          "enum": [
+            "all",
+            "mine",
+            "faces",
+            "animals",
+            "nature",
+            "space",
+            "scenery",
+            "weather",
+            "objects",
+            "art",
+            "geometric",
+            "food",
+            "anime"
+          ],
+          "enumDescriptions": [
+            "Any shape",
+            "Only designs you made in Artify Studio",
+            "Abstract faces: cubist posters, masks, profiles and more",
+            "Cats, dogs, birds and fish",
+            "Flowers, meadows and trees",
+            "Galaxies, planets and night skies",
+            "Landscapes, mountains and waves",
+            "Clouds, rain, storms, snow, rainbows and wind",
+            "Chairs, tables, rooms, lamps, clocks and more",
+            "Easels, vases and tile mosaics",
+            "Rings, stars, cubes and triangles",
+            "Fruit, pizza, sushi, cakes and other things to eat",
+            "Original anime and cartoon characters, faces, expressions and scenes, plus manga pages and comic effects"
+          ],
+          "description": "Which kind of shapes the Reform button in the Explorer builds."
+        },
+        "artify.showStatusBarButton": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Artify Play button in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build:themes": "node scripts/build-themes.js",
+    "check:contrast": "node scripts/check-contrast.js",
+    "check:art": "node scripts/check-art.js",
+    "test": "npm run build:themes && npm run check:contrast && npm run check:art && npm run check:deck",
+    "check:deck": "node scripts/check-deck.js"
+  }
+}

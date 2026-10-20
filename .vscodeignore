@@ -1,0 +1,5 @@
+scripts/**
+.vscode/**
+**/*.map
+.gitignore
+*_PLAN.md
