@@ -137,8 +137,10 @@ function drawPlant(ctx, x, y, s, leaves = ctx.int(5, 8)) {
   for (let i = 0; i < leaves; i++) {
     const t = leaves === 1 ? 0.5 : i / (leaves - 1);
     const a = -Math.PI * 0.9 + t * Math.PI * 0.8;
-    const len = ctx.between(50, 90) * s;
     const base = [x, y - 50 * s];
+    // Leaves are cut short where they would reach past the edge of the picture.
+    const room = Math.min(Math.cos(a) < 0 ? (base[0] - 10) / -Math.cos(a) : (230 - base[0]) / Math.cos(a), (base[1] - 30) / -Math.sin(a));
+    const len = Math.min(ctx.between(50, 90) * s, room);
     ctx.poly([base, pol(base[0], base[1], len * 0.5, a - 0.28), pol(base[0], base[1], len, a), pol(base[0], base[1], len * 0.5, a + 0.28)], ctx.green(i), { inset: 1, loose: ctx.rand() < 0.15 });
   }
 }
@@ -339,7 +341,7 @@ function plant(ctx) {
 }
 
 function umbrella(ctx) {
-  drawUmbrella(ctx, 120, 330, ctx.between(1.3, 1.6));
+  drawUmbrella(ctx, 120, 330, ctx.between(1.0, 1.25));
   const color = ctx.kind === 'light' ? '#1E7B8F' : '#62C3E3';
   for (let i = 0; i < 18; i++) {
     const x = ctx.between(16, 224);

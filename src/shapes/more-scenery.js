@@ -11,9 +11,13 @@ const X1 = 226;
 const STORM = { dark: ['#6C7A89', '#8A97A5', '#55616E'], light: ['#5E6B78', '#7E8C99', '#4A5560'] };
 const NIGHT = ['#14122B', '#1D1845', '#2B2358'];
 
+const FRAME = [X0, 50, X1 - X0, 296];
+
+// Bands of colour across the frame. Everything drawn after them is clipped to the frame.
 const bands = (ctx, colors, y0, y1) => {
   const h = (y1 - y0) / colors.length;
   colors.forEach((c, i) => ctx.poly(R(X0, y0 + i * h, X1 - X0, h + 1), c, { inset: 1, still: true }));
+  ctx.clipTo(FRAME);
 };
 
 function sun(ctx, x, y, r, rays = 10) {
@@ -156,6 +160,8 @@ function waterfall(ctx) {
   ctx.poly([[X0, 130], [86, 130], [92, 270], [X0, 300]], cliff[0], { inset: 1, still: true });
   ctx.poly([[154, 130], [X1, 150], [X1, 296], [148, 270]], cliff[1], { inset: 1, still: true });
   for (let i = 0; i < 6; i++) ctx.poly([[88 + i * 11, 130], [99 + i * 11, 130], [99 + i * 11, 276], [88 + i * 11, 276]], i % 2 ? ctx.colors[1] : ctx.col(5), { inset: 1, still: true });
+  // Ground under the cliffs and the pool, so the rocks below have something to sit on.
+  ctx.poly(R(X0, 270, X1 - X0, 76), cliff[1], { inset: 1, still: true });
   ctx.ellipse(120, 292, 86, 26, ctx.col(2));
   ctx.ellipse(120, 288, 64, 16, ctx.col(5));
   for (let i = 0; i < 7; i++) ctx.circ(ctx.between(88, 154), ctx.between(268, 296), ctx.between(5, 11), ctx.colors[1]);
@@ -233,6 +239,8 @@ function hail(ctx) {
 function windowRain(ctx) {
   ctx.poly(R(X0, 50, X1 - X0, 296), ctx.col(4), { inset: 1, still: true });
   ctx.poly(R(30, 66, 180, 250), NIGHT[0], { inset: 1, still: true });
+  // The lights and buildings outside are seen only through the glass.
+  ctx.clipTo([30, 66, 180, 250]);
   for (let i = 0; i < 22; i++) ctx.raw(`<circle cx="${fmt(ctx.between(40, 200))}" cy="${fmt(ctx.between(180, 300))}" r="${fmt(ctx.between(5, 14))}" fill="${ctx.pick([ctx.colors[0], ctx.col(3), ctx.col(6), ctx.col(5)])}" opacity=".55"/>`, 120, 240, [40, 170, 200, 314]);
   for (let i = 0; i < 6; i++) ctx.poly(R(44 + i * 28, ctx.between(200, 260), ctx.between(10, 20), 120), NIGHT[2], { inset: 1, still: true });
   const rainy = ctx.kind === 'light' ? '#8AD6F0' : '#62C3E3';
@@ -244,6 +252,7 @@ function windowRain(ctx) {
     ctx.poly([[x, y - r * 2.4], [x + r, y - r * 0.4], [x - r, y - r * 0.4]], rainy, { inset: 1, still: true });
     ctx.circ(x, y, r, rainy);
   }
+  ctx.clipTo(null);
   ctx.poly(R(100, 66, 6, 250), ctx.col(4), { inset: 1, still: true });
   ctx.poly(R(30, 180, 180, 6), ctx.col(4), { inset: 1, still: true });
   ctx.poly(R(18, 316, 204, 14), ctx.col(0), { inset: 1, still: true });
@@ -282,15 +291,8 @@ function moonClouds(ctx) {
   const my = ctx.between(130, 170);
   ctx.circ(mx, my, 56, ctx.colors[1]);
   [[-16, -14, 9], [14, 10, 12], [-10, 22, 6], [22, -22, 6]].forEach(([dx, dy, r]) => ctx.circ(mx + dx, my + dy, r, ctx.kind === 'light' ? '#F4EFE0' : '#E8D9A0'));
-  for (let i = 0; i < 4; i++) {
-    const y = 210 + i * 34 + ctx.between(-6, 6);
-    const x = ctx.between(40, 200);
-    const w = ctx.between(100, 160);
-    const shades = ['#6C7A89', '#8A97A5', '#55616E'];
-    ctx.ellipse(x, y, w / 2, 14, shades[i % 3]);
-    ctx.ellipse(x - w * 0.2, y - 8, w * 0.22, 14, shades[(i + 1) % 3]);
-    ctx.ellipse(x + w * 0.18, y - 6, w * 0.26, 16, shades[i % 3]);
-  }
+  const clouds = Array.from({ length: 4 }, (_, i) => [ctx.between(40, 200), 210 + i * 34 + ctx.between(-6, 6), ctx.between(100, 160)]);
+  // Stars go in before the clouds, so the clouds pass in front of them.
   for (let i = 0; i < 26; i++) {
     const x = ctx.between(20, 220);
     const y = ctx.between(60, 340);
@@ -298,6 +300,12 @@ function moonClouds(ctx) {
     if (ctx.rand() < 0.4) ctx.poly(starPoints(x, y, ctx.between(4, 8), 1.6, 4), ctx.colors[1], { inset: 1, still: true });
     else ctx.circ(x, y, ctx.between(0.9, 2), ctx.colors[1]);
   }
+  const shades = ['#6C7A89', '#8A97A5', '#55616E'];
+  clouds.forEach(([x, y, w], i) => {
+    ctx.ellipse(x, y, w / 2, 14, shades[i % 3]);
+    ctx.ellipse(x - w * 0.2, y - 8, w * 0.22, 14, shades[(i + 1) % 3]);
+    ctx.ellipse(x + w * 0.18, y - 6, w * 0.26, 16, shades[i % 3]);
+  });
   return 'moonlit clouds';
 }
 

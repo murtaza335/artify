@@ -9,10 +9,13 @@ const T = require('./toon');
 
 const R = rectPts;
 const still = { inset: 1, still: true };
-// The panel colour is kept on ctx.bg, so figures and props drawn on it can stay clear of it.
+const FRAME = [14, 48, 212, 298];
+// The panel colour is kept on ctx.bg, so figures and props drawn on it can stay clear of it. Everything drawn
+// after the panel is clipped to it.
 const panel = (ctx, fill) => {
   ctx.bg = fill;
   ctx.poly(R(14, 48, 212, 298), fill, still);
+  ctx.clipTo(FRAME);
 };
 const tone = (ctx, off = 4) => ctx.col(ctx.int(0, 7) + off);
 

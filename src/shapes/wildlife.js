@@ -8,6 +8,15 @@ const { TAU, fmt, pol, slice, rectPts, arcBand, blob } = require('./engine');
 const R = rectPts;
 const still = { inset: 1, still: true };
 
+// The round backdrop behind an animal. Its colour is stepped past any of the animal's own colours, so the
+// animal never disappears into it.
+function disc(ctx, cx, cy, r0, r1, avoid) {
+  const r = ctx.between(r0, r1);
+  let k = ctx.int(0, 7) + 4;
+  for (let n = 0; n < 8 && avoid.includes(ctx.col(k)); n++) k++;
+  ctx.circ(cx, cy, r, ctx.col(k));
+}
+
 // An egg-shaped body cut into shards, optionally turned about its centre.
 function oval(ctx, cx, cy, rx, ry, color, { rot = 0, bands = ctx.int(4, 6) } = {}) {
   slice(ctx, (t) => ry * Math.sqrt(Math.max(0, 1 - (2 * t - 1) ** 2)), (t, b) => {
@@ -19,7 +28,7 @@ function oval(ctx, cx, cy, rx, ry, color, { rot = 0, bands = ctx.int(4, 6) } = {
 function elephant(ctx) {
   const side = ctx.rand() < 0.5 ? -1 : 1;
   const hide = ctx.pick([2, 5, 4, 7]);
-  ctx.circ(120, 190, ctx.between(96, 106), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 190, 96, 106, [ctx.col(hide), ctx.col(hide + 1)]);
   for (const dx of [-38, -12, 22, 46]) ctx.poly(R(120 + dx - 11, 252, 22, 74), ctx.col(hide), still);
   oval(ctx, 120 - side * 8, 226, 66, 46, (b, i) => ctx.col(hide + (i === 1 ? 1 : 0)));
   oval(ctx, 120 + side * 62, 190, 32, 38, (b, i) => ctx.col(hide + (i === 1 ? 1 : 0)));
@@ -37,7 +46,7 @@ function giraffe(ctx) {
   const side = ctx.rand() < 0.5 ? -1 : 1;
   const fur = ctx.col(ctx.pick([0, 0, 6]));
   const spot = ctx.col(4);
-  ctx.circ(120, 180, ctx.between(94, 104), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 180, 94, 104, [fur]);
   for (const dx of [-30, -12, 22, 40]) ctx.poly(R(120 + dx - 6, 250, 12, 90), fur, still);
   oval(ctx, 120, 240, 56, 34, (b, i) => (i % 2 ? fur : ctx.col(1)), { bands: 5 });
   const nx = 120 + side * 36;
@@ -59,7 +68,7 @@ function giraffe(ctx) {
 
 function octopus(ctx) {
   const body = ctx.col(ctx.pick([3, 6, 2, 0]));
-  ctx.circ(120, 190, ctx.between(100, 108), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 190, 100, 108, [body]);
   const n = 8;
   for (let i = 0; i < n; i++) {
     const x0 = 120 + (i - 3.5) * 14;
@@ -79,7 +88,7 @@ function octopus(ctx) {
 
 function jellyfish(ctx) {
   const bell = ctx.col(ctx.pick([6, 5, 3, 0]));
-  ctx.circ(120, 190, ctx.between(100, 108), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 190, 100, 108, [bell]);
   const top = ctx.between(80, 100);
   const r = ctx.between(62, 76);
   slice(ctx, (t) => r * Math.sqrt(Math.max(0, 1 - (1 - t) ** 2)), (t, b) => [120 + b, top + t * r * 1.1], { bands: 5, big: 24, loosePct: 0.06, skipPct: 0, color: (b, i) => (i === 1 ? ctx.colors[1] : bell) });
@@ -101,7 +110,7 @@ function hummingbird(ctx) {
   const body = ctx.col(ctx.pick([2, 7, 5]));
   const fx = 120 - side * 66;
   const stem = ctx.green(0);
-  ctx.circ(120, 180, ctx.between(94, 104), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 180, 94, 104, [body]);
   ctx.line(fx, 340, fx + side * 8, 270, stem, 4);
   ctx.poly([[fx - 26, 236], [fx + 26, 236], [fx + 8, 276], [fx - 8, 276]], ctx.col(3), still);
   ctx.ellipse(fx, 236, 26, 6, ctx.col(6), 0);
@@ -123,7 +132,7 @@ function flamingo(ctx) {
   const side = ctx.rand() < 0.5 ? -1 : 1;
   const pink = ctx.col(6);
   const deep = ctx.col(3);
-  ctx.circ(120, 180, ctx.between(94, 104), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 180, 94, 104, [pink, deep]);
   ctx.ellipse(120, 334, 78, 10, ctx.col(5), 0);
   const kx = 120 + side * 10;
   ctx.line(120, 238, kx, 296, deep, 5);
@@ -152,8 +161,9 @@ function snail(ctx) {
     ctx.circ(x + side * 14 + s * 10, 224, 5, ctx.ink);
   }
   const rings = ctx.int(4, 5);
-  for (let i = rings; i >= 0; i--) ctx.circ(120 - side * 6 + i * 2 * side, 232 - i * 3, 56 - i * 9, ctx.col(shell + (i % 2 ? 3 : 0)));
-  ctx.circ(120 - side * 6, 232, 5, ctx.ink);
+  // The shell rests on the body, largest ring first so the smaller ones show on top of it.
+  for (let i = 0; i <= rings; i++) ctx.circ(120 - side * 6 + i * 2 * side, 250 - i * 3, 56 - i * 9, ctx.col(shell + (i % 2 ? 3 : 0)));
+  ctx.circ(120 - side * 6 + rings * 2 * side, 250 - rings * 3, 5, ctx.ink);
   return 'snail';
 }
 
@@ -175,7 +185,7 @@ function bee(ctx) {
 function deer(ctx) {
   const side = ctx.rand() < 0.5 ? -1 : 1;
   const coat = ctx.col(ctx.pick([0, 3, 4]));
-  ctx.circ(120, 180, ctx.between(96, 106), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 180, 96, 106, [coat]);
   for (const dx of [-36, -22, 24, 38]) ctx.line(120 + dx, 252, 120 + dx + ctx.between(-4, 4), 336, coat, 7);
   oval(ctx, 120, 236, 62, 32, (b, i) => (i === 2 ? ctx.colors[1] : coat), { bands: 5 });
   const nx = 120 + side * 40;
@@ -219,7 +229,7 @@ function peacock(ctx) {
 
 function frog(ctx) {
   const skin = ctx.green(ctx.int(0, 3));
-  ctx.circ(120, 190, ctx.between(100, 108), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 190, 100, 108, [skin]);
   ctx.ellipse(120, 318, 94, 20, ctx.green(1), 0);
   for (const s of [-1, 1]) {
     ctx.ellipse(120 + s * 66, 296, 30, 16, skin, s * 0.3);
@@ -245,7 +255,7 @@ function origamiCrane(ctx) {
   const b = ctx.col(ctx.int(0, 7) + 3);
   const c = ctx.col(ctx.int(0, 7) + 5);
   const lift = ctx.between(0, 30);
-  ctx.circ(120, 190, ctx.between(100, 108), ctx.col(ctx.int(0, 7) + 4));
+  disc(ctx, 120, 190, 100, 108, [a, b, c]);
   const P = (pts) => pts.map(([x, y]) => [120 + side * x, y]);
   ctx.poly(P([[-8, 214 - lift * 0.2], [-62, 112 - lift], [28, 196]]), b, still);
   ctx.poly(P([[-8, 214 - lift * 0.2], [-62, 112 - lift], [-30, 176]]), c, still);

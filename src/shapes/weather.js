@@ -201,6 +201,7 @@ function cloudscape(ctx) {
   const sky = ['#E5534B', '#F79BB0', '#E9A93B'];
   const bandH = 66;
   sky.forEach((c, i) => ctx.poly(rectPts(12, 50 + i * bandH, 216, bandH + 1), c, { inset: 1, still: true }));
+  ctx.clipTo([12, 50, 216, 296]);
   const sx = ctx.between(80, 160);
   ctx.shape(`M${fmt(sx - 44)} 262 A44 44 0 0 1 ${fmt(sx + 44)} 262 Z`, ctx.colors[1], sx, 240, [sx - 44, 218, sx + 44, 262]);
   const strips = ctx.int(5, 7);

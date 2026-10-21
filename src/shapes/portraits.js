@@ -6,7 +6,12 @@ const { TAU, fmt, pol, rectPts, rotRect, blob, starPoints } = require('./engine'
 
 const R = rectPts;
 const still = { inset: 1, still: true };
-const panel = (ctx, fill) => ctx.poly(R(14, 48, 212, 298), fill, still);
+const FRAME = [14, 48, 212, 298];
+// Everything drawn after the panel is clipped to it, so nothing spills over the frame.
+const panel = (ctx, fill) => {
+  ctx.poly(R(14, 48, 212, 298), fill, still);
+  ctx.clipTo(FRAME);
+};
 
 function robotFace(ctx) {
   const metal = ctx.col(ctx.pick([5, 2, 0, 6]));

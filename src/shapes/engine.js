@@ -42,6 +42,7 @@ function createContext(kind, seed) {
   const ctx = {
     rand, colors, parts, extra, defs, kind, seed,
     clip: null,
+    clipRect: null,
     ink: INK[kind] || INK.dark,
     crack: CRACK[kind] || CRACK.dark,
     greens: GREENS[kind] || GREENS.dark,
@@ -52,7 +53,28 @@ function createContext(kind, seed) {
     pick: (list) => list[Math.floor(rand() * list.length)],
 
     raw(svg, cx, cy, bounds) {
+      const r = ctx.clipRect;
+      if (r && ctx.clip) {
+        // A part wholly outside the clip would be an invisible puzzle piece, so it is left out.
+        if (bounds[0] >= r[2] || bounds[2] <= r[0] || bounds[1] >= r[3] || bounds[3] <= r[1]) return;
+        bounds = [Math.max(bounds[0], r[0]), Math.max(bounds[1], r[1]), Math.min(bounds[2], r[2]), Math.min(bounds[3], r[3])];
+      }
       parts.push({ svg: ctx.clip ? `<g clip-path="${ctx.clip}">${svg}</g>` : svg, cx, cy, bounds });
+    },
+    // Clips every part drawn after this to the rectangle [x, y, w, h], such as the frame of a picture, so nothing
+    // spills over its edge. clipTo(null) stops clipping. The id names the rectangle, so pictures sharing a page
+    // can share the definition.
+    clipTo(rect) {
+      if (!rect) {
+        ctx.clip = null;
+        ctx.clipRect = null;
+        return;
+      }
+      const [x, y, w, h] = rect.map(fmt);
+      const id = `clip-${x}-${y}-${w}-${h}`.replace(/\./g, '_');
+      if (!defs.some((d) => d.includes(`id="${id}"`))) defs.push(`<clipPath id="${id}"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath>`);
+      ctx.clip = `url(#${id})`;
+      ctx.clipRect = [x, y, x + w, y + h];
     },
     circ(cx, cy, r, fill) {
       ctx.raw(`<circle cx="${fmt(cx)}" cy="${fmt(cy)}" r="${fmt(r)}" fill="${fill}"/>`, cx, cy, [cx - r, cy - r, cx + r, cy + r]);

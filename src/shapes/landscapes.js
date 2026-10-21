@@ -7,8 +7,16 @@ const { TAU, fmt, pol, rectPts, rotRect, curvePoly, blob, stripes, arcBand, slic
 
 const R = rectPts;
 const still = { inset: 1, still: true };
-const panel = (ctx, fill) => ctx.poly(R(14, 48, 212, 298), fill, still);
-const sky = (ctx, h, fill) => ctx.poly(R(14, 48, 212, h), fill, still);
+const FRAME = [14, 48, 212, 298];
+// Everything drawn after the panel is clipped to it, so nothing spills over the frame.
+const panel = (ctx, fill) => {
+  ctx.poly(R(14, 48, 212, 298), fill, still);
+  ctx.clipTo(FRAME);
+};
+const sky = (ctx, h, fill) => {
+  ctx.poly(R(14, 48, 212, h), fill, still);
+  ctx.clipTo(FRAME);
+};
 
 function pineTree(ctx, x, base, h, color) {
   const tiers = 3;
@@ -187,10 +195,14 @@ function nightCity(ctx) {
 }
 
 function frostWindow(ctx) {
-  panel(ctx, ctx.col(5));
+  // The glass must differ from the frame and from the cream frost, or the frost would vanish into it.
+  let g = 5;
+  while (ctx.col(g) === ctx.colors[1] || ctx.col(g) === ctx.col(2)) g++;
+  const glass = ctx.col(g);
+  panel(ctx, glass);
   const cx = 120;
   ctx.poly(R(14, 48, 212, 298), ctx.col(2), { inset: 1, still: true });
-  ctx.poly(R(26, 60, 188, 274), ctx.col(5), still);
+  ctx.poly(R(26, 60, 188, 274), glass, still);
   ctx.poly(R(cx - 3, 60, 6, 274), ctx.colors[1], still);
   ctx.poly(R(26, 190, 188, 6), ctx.colors[1], still);
   const flakes = ctx.int(3, 5);

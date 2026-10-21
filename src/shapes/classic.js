@@ -168,8 +168,9 @@ function fish(ctx) {
 
 function tree(ctx) {
   const tw = ctx.between(10, 16);
-  ctx.poly([[120 - tw / 2, 290], [120 + tw / 2, 290], [120 + tw / 2, 318], [120 - tw / 2, 318]], ctx.col(4), { inset: 1 });
-  ctx.poly([[120 - tw / 2, 318], [120 + tw / 2, 318], [120 + tw / 2, 346], [120 - tw / 2, 346]], ctx.col(0), { inset: 1 });
+  // The trunk reaches up into the canopy, so the crown never floats above it.
+  ctx.poly([[120 - tw / 2, 200], [120 + tw / 2, 200], [120 + tw / 2, 273], [120 - tw / 2, 273]], ctx.col(4), { inset: 1 });
+  ctx.poly([[120 - tw / 2, 273], [120 + tw / 2, 273], [120 + tw / 2, 346], [120 - tw / 2, 346]], ctx.col(0), { inset: 1 });
   if (ctx.rand() < 0.4) {
     const count = ctx.int(4, 6);
     for (let i = 0; i < count; i++) {

@@ -56,15 +56,22 @@ function planet(ctx) {
   const cy = ctx.between(170, 200);
   const r = ctx.between(52, 68);
   const bands = ctx.int(4, 6);
+  // The ring is two tilted ellipse outlines. Their far half is drawn before the planet and their near half after
+  // it, so the ring passes behind the planet at the top and in front of it at the bottom.
+  const tilt = ctx.between(-0.5, -0.1);
+  const rings = [[1.9, 0.42, ctx.colors[1], 7], [1.65, 0.36, ctx.col(0), 3]];
+  const ring = (near) => rings.forEach(([kx, ky, color, width]) => {
+    const rx = r * kx;
+    const ry = r * ky;
+    ctx.raw(`<path d="M${fmt(cx - rx)} ${fmt(cy)} A${fmt(rx)} ${fmt(ry)} 0 0 ${near ? 0 : 1} ${fmt(cx + rx)} ${fmt(cy)}" fill="none" stroke="${color}" stroke-width="${width}" transform="rotate(${fmt((tilt * 180) / Math.PI)} ${fmt(cx)} ${fmt(cy)})"/>`, cx, cy, [cx - rx, cy - r * kx * 0.42, cx + rx, cy + r * kx * 0.42]);
+  });
+  ring(false);
   for (let i = 0; i < bands; i++) {
     const y0 = cy - r + (i * 2 * r) / bands;
     const y1 = cy - r + ((i + 1) * 2 * r) / bands;
     ctx.poly(circleBand(cx, cy, r, y0, y1), ctx.col(i * 2 + 3), { inset: 1, still: true });
   }
-  // Ring drawn as a tilted ellipse outline, then moons.
-  const tilt = ctx.between(-0.5, -0.1);
-  ctx.raw(`<ellipse cx="${fmt(cx)}" cy="${fmt(cy)}" rx="${fmt(r * 1.9)}" ry="${fmt(r * 0.42)}" fill="none" stroke="${ctx.colors[1]}" stroke-width="7" transform="rotate(${fmt((tilt * 180) / Math.PI)} ${fmt(cx)} ${fmt(cy)})"/>`, cx, cy, [cx - r * 1.9, cy - r * 0.8, cx + r * 1.9, cy + r * 0.8]);
-  ctx.raw(`<ellipse cx="${fmt(cx)}" cy="${fmt(cy)}" rx="${fmt(r * 1.65)}" ry="${fmt(r * 0.36)}" fill="none" stroke="${ctx.col(0)}" stroke-width="3" transform="rotate(${fmt((tilt * 180) / Math.PI)} ${fmt(cx)} ${fmt(cy)})"/>`, cx, cy, [cx - r * 1.65, cy - r * 0.7, cx + r * 1.65, cy + r * 0.7]);
+  ring(true);
   const moons = ctx.int(1, 3);
   for (let m = 0; m < moons; m++) {
     const a = ctx.between(0, TAU);

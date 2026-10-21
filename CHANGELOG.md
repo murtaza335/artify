@@ -1,7 +1,11 @@
 # Change Log
 
-## Unreleased
+## 0.11.5
 
+- Artwork stays inside its frame. Framed scenes, portraits and characters are clipped to their picture, so hair, legs, clouds, cliffs, rainbows and rain no longer spill over the edge, and nothing is left as an invisible puzzle piece.
+- Layers sit in the right order: the planet's ring passes behind it at the top, stars shine behind the moonlit clouds, the snail's shell rests on its body with its spiral showing, the tree's trunk reaches into its crown, the city outside the rainy window stays behind the glass, and the waterfall has ground under its rocks.
+- Nothing vanishes into its background: animals never match the colour of the disc behind them, and the frosted window always shows its frost.
+- The umbrella fits the picture, and the potted plant's leaves stop at the edge.
 - Bauhaus Day is easier to read and calmer to look at. The highlighted row in the Command Palette, suggestions and menus is visible again (it was white on white). Buttons, badges and focus rings are Bauhaus blue instead of red, so they no longer look like errors. Red stays on the cursor and the active tab. The near-black outlines between every part of the window are now soft warm rules. The sidebar is a lighter sky blue with clearer selected and hover rows, the secondary buttons are light, and diffs, hovers, peek and keybinding labels have been restyled to match.
 - Tile Night polish. Selected rows in the sidebar stand out from hovered ones. Find matches have an ochre outline, so the code underneath stays readable. Added lines in diffs are a clear mint instead of olive. The current line is a little easier to spot. ANSI black in the terminal is no longer invisible against the panel. Keybinding labels, inline code and quote blocks are restyled to match the theme.
 
