@@ -34,6 +34,14 @@ const animeCharacters = require('./shapes/anime-characters');
 const animeScenes = require('./shapes/anime-scenes');
 const cartoons = require('./shapes/cartoons');
 const cartoonScenes = require('./shapes/cartoon-scenes');
+const abstractPioneers = require('./shapes/abstract-pioneers');
+const abstractHardedge = require('./shapes/abstract-hardedge');
+const abstractGenerative = require('./shapes/abstract-generative');
+const abstractOrganic = require('./shapes/abstract-organic');
+const abstractWorld = require('./shapes/abstract-world');
+const abstractGraphic = require('./shapes/abstract-graphic');
+const abstractColorfield = require('./shapes/abstract-colorfield');
+const abstractIllusion = require('./shapes/abstract-illusion');
 
 const CATEGORIES = {
   animals: [animals.cat, animals.dog, animals.songbird, animals.owl, animals.gulls, classic.fish, moreAnimals.fox, moreAnimals.whale, moreAnimals.butterfly, moreAnimals.rabbit, moreAnimals.turtle, moreAnimals.penguin, wildlife.elephant, wildlife.giraffe, wildlife.octopus, wildlife.jellyfish, wildlife.hummingbird, wildlife.flamingo, wildlife.snail, wildlife.bee, wildlife.deer, wildlife.peacock, wildlife.frog, wildlife.origamiCrane],
@@ -47,6 +55,7 @@ const CATEGORIES = {
   geometric: [geometric.rings, geometric.star, geometric.cubes, geometric.triangles, classic.gem, classic.tiles, moreArt.truchet, moreArt.voronoi, moreArt.spirograph, moreArt.lissajous, moreArt.moire, moreArt.sierpinski, moreArt.mandala, moreArt.arches, patterns.penrose, patterns.honeycomb, patterns.goldenSpiral, patterns.tangram, patterns.islamicStar, patterns.guilloche, patterns.phyllotaxis, patterns.quilt, patterns.kaleidoscope, patterns.chevrons, patterns.halftone, patterns.impossibleTriangle],
   anime: [animeFaces.animeEyes, animeFaces.expressionSheet, animeFaces.shoujoPortrait, animeFaces.shonenGrin, animeFaces.coolRival, animeFaces.tearfulFace, animeFaces.angryChibi, animeFaces.sleepyChibi, animeCharacters.spikyHero, animeCharacters.magicalGirl, animeCharacters.schoolUniform, animeCharacters.ninjaRunner, animeCharacters.wanderingRonin, animeCharacters.mechaPilot, animeCharacters.giantRobot, animeCharacters.catEarGirl, animeCharacters.foxSpirit, animeCharacters.oniWarrior, animeCharacters.idolSinger, animeCharacters.oldMaster, animeCharacters.darkLord, animeCharacters.chibiCritter, animeCharacters.kaijuAttack, animeScenes.sakuraSchool, animeScenes.ramenStall, animeScenes.rooftopSunset, animeScenes.trainCrossing, animeScenes.shrineGate, animeScenes.neonAlley, animeScenes.summerFestival, animeScenes.floatingIslands, animeScenes.onsenNight, animeScenes.kotatsuRoom, animeScenes.transformation, animeScenes.mechaHangar, animeScenes.speedBurst, animeScenes.mangaPanels, animeScenes.screentoneGradient, animeScenes.impactFrame,
     cartoons.rubberHose, cartoons.cartoonCat, cartoons.cartoonMouse, cartoons.superheroKid, cartoons.friendlyGhost, cartoons.littleAlien, cartoons.cartoonDino, cartoons.witchOnBroom, cartoons.pirateCaptain, cartoons.monsterUnderBed, cartoons.grumpyCloud, cartoons.happySun, cartoons.bigNoseFace, cartoons.dizzyFace, cartoonScenes.chaseScene, cartoonScenes.anvilDrop, cartoonScenes.desertCliff, cartoonScenes.hillsWithFaces, cartoonScenes.wobblyHouse, cartoonScenes.popBurst, cartoonScenes.squashBall, cartoonScenes.tvTestCard],
+  abstract: [...Object.values(abstractPioneers), ...Object.values(abstractHardedge), ...Object.values(abstractGenerative), ...Object.values(abstractOrganic), ...Object.values(abstractWorld), ...Object.values(abstractGraphic), ...Object.values(abstractColorfield), ...Object.values(abstractIllusion)],
   food: [food.fruitBowl, food.watermelon, food.sushi, food.pizza, food.iceCream, food.cupcake, food.citrusSlices, food.pineapple, food.layeredCake, food.breakfast]
 };
 const ALL = [...new Set(Object.values(CATEGORIES).flat())];
@@ -61,7 +70,7 @@ const canonicalCategory = (category) => CATEGORY_ALIASES[category] || category;
 const formIds = (category) => [...new Set((CATEGORIES[canonicalCategory(category)] || ALL).map((fn) => fn.name))];
 
 const CATEGORY_LABELS = {
-  all: 'Everything', animals: 'Animals', nature: 'Nature', space: 'Space', scenery: 'Scenery', weather: 'Weather', objects: 'Objects', art: 'Art', faces: 'Faces', geometric: 'Geometry', food: 'Food', anime: 'Anime & Cartoons', mine: 'My designs'
+  all: 'Everything', animals: 'Animals', nature: 'Nature', space: 'Space', scenery: 'Scenery', weather: 'Weather', objects: 'Objects', art: 'Art', abstract: 'Abstract', faces: 'Faces', geometric: 'Geometry', food: 'Food', anime: 'Anime & Cartoons', mine: 'My designs'
 };
 
 // Shards fly together when the host page includes this CSS. `p` marks a piece of the form, `d` marks debris.

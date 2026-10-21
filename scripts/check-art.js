@@ -42,7 +42,7 @@ const PUZZLE_MAX_PIECES = 45;
 const HARD_CEILING = 150;
 const NOT_PUZZLES = new Set(['pinecone', 'mosaicFace']);
 // The strict frame and puzzle rules hold the forms added in this round of work; the older forms predate them.
-const NEW_FORMS = new Set(['food', 'patterns', 'styles', 'wildlife', 'garden', 'cosmos', 'landscapes', 'things', 'portraits', 'anime-faces', 'anime-characters', 'anime-scenes', 'cartoons', 'cartoon-scenes'].flatMap((f) => Object.keys(require('../src/shapes/' + f))));
+const NEW_FORMS = new Set(['food', 'patterns', 'styles', 'wildlife', 'garden', 'cosmos', 'landscapes', 'things', 'portraits', 'anime-faces', 'anime-characters', 'anime-scenes', 'cartoons', 'cartoon-scenes', 'abstract-pioneers', 'abstract-hardedge', 'abstract-generative', 'abstract-organic', 'abstract-world', 'abstract-graphic', 'abstract-colorfield', 'abstract-illusion'].flatMap((f) => Object.keys(require('../src/shapes/' + f))));
 const stats = new Map();
 for (const id of FORM_IDS) {
   const entry = { min: Infinity, max: 0, fits: 0 };

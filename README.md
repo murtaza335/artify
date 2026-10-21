@@ -80,6 +80,15 @@ Each category is available in Play and in `artify.explorerShapes`.
 - **Weather:** sunny days, rainstorms, thunderstorms, snowfall, rainbows, windy days, fog, tornadoes, sunset clouds, auroras, hurricanes, hail, rainy windows, heat waves, moonlit clouds, frosted windows, dust storms, sunshowers and monsoons.
 - **Objects:** chairs, tables set with teapots and flowers, a cozy room, a reading corner, a sofa, a bed, a desk with a laptop, a light bulb, a guitar, a hot air balloon, a camera, a front door, clocks, a bookshelf, plants, an umbrella, a house, a lighthouse, a bicycle, a sailboat, a piano, a typewriter, a record player, a kite, books, a coffee cup, a vintage car, a train, headphones and a watering can.
 - **Art:** an easel painting, a Mondrian-style grid, nested squares, Suprematist and Kandinsky-style compositions, a still life, vases and tile mosaics, plus pointillism, pop art, art deco, constructivism, Bauhaus posters, Matisse cut-outs, a great wave, Memphis patterns, op art, Kusama dots, Haring dancers, Klimt spirals, Delaunay discs, Arp blobs, a Calder mobile, Rothko fields, a Swiss grid, hard edge, a Roman mosaic and Riley stripes.
+- **Abstract:** abstract art in many interpretations, in eight families.
+  - Pioneers: orphic prisms, rayonist rays, a vorticist vortex, floating prouns, counter-compositions, a lozenge grid, a suprematist cross, spirit spirals, futurist speed, a cubist collage, synchromies, purist still lifes, light rasters and a formal alphabet.
+  - Hard edge and minimal: protractor arcs, stripe mazes, uneven targets, colour panels, arcs from the corners, incomplete cubes, gravel, broken cubes, box stacks, diagonal mazes, stitch patterns, twisted squares and sliced discs.
+  - Generative: flow fields, circle packing, quadtrees, ridgelines, contours, Hilbert and dragon curves, cellular automata, the game of life, harmonographs, rose curves, superformula shells, strange attractors, pixel sorting and recursive triangles.
+  - Organic and lyrical: soak stains, drip webs, an ensō, ink blots, biomorphic cells, a lava lamp, terrazzo, agate, wood grain, marbling, paper-cut waves, venation, river deltas and liquid bands.
+  - World patterns: painted walls, woven strips, dot tracks, housetop and strip quilts, mudcloth, shibori, ikat, glazed tiles, star mosaics, wave scales, kilim steps, step frets, sashiko, tartan and herringbone.
+  - Graphic: atomic starbursts, boomerangs, psychedelic rings, groovy sunsets, supergraphics, risograph misprints, glitch slices, a synthwave grid, chrome blobs, torn collage, neon tubes, isometric blocks and brutalist blocks.
+  - Colour field: zip fields, poured veils, spray gradients, black strokes, push and pull, a colour wheel, an aperture of light, soft horizons, splatter, drip curtains and layered washes.
+  - Illusions: a bulging checker, a café wall, implied shapes, a twisted-cord spiral, a scintillating grid, ambiguous cubes, tunnels, bending lines, moiré, a checker sphere, a wire torus and globe, roto-reliefs and warped grids.
 - **Geometry:** Truchet tiles, Voronoi stained glass, spirographs, Lissajous curves, moire circles, a Sierpinski triangle, mandalas, arches, rings, stars, isometric cubes, triangle grids and gems, plus Penrose tilings, honeycombs, a golden spiral, tangrams, Islamic star tilings, guilloche rosettes, phyllotaxis, quilts, kaleidoscopes, chevrons, halftone dots and an impossible triangle.
 - **Food:** fruit bowls, watermelon, sushi, pizza, ice cream, cupcakes, citrus slices, pineapples, layered cakes and breakfast plates.
 - **Anime & Cartoons:** original characters and scenes in anime and cartoon styles.
@@ -109,7 +118,7 @@ Several of the geometric forms come from classic generative-art techniques: Truc
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| `artify.explorerShapes` | `all` | Which category the Explorer's Reform button draws from: `all`, `mine`, `faces`, `animals`, `nature`, `space`, `scenery`, `weather`, `objects`, `art`, `geometric`, `food` or `anime` (Anime & Cartoons) |
+| `artify.explorerShapes` | `all` | Which category the Explorer's Reform button draws from: `all`, `mine`, `faces`, `animals`, `nature`, `space`, `scenery`, `weather`, `objects`, `art`, `abstract`, `geometric`, `food` or `anime` (Anime & Cartoons) |
 | `artify.showStatusBarButton` | `true` | Shows the Artify Play button in the status bar |
 
 ## Privacy and safety

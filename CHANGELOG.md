@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.12.0
+
+- New **Abstract** category, in Play and in `artify.explorerShapes`: abstract art in eight families, each form an original interpretation in the Artify palette. Pioneers of abstraction, hard edge and minimal, generative algorithms, organic and lyrical shapes, pattern traditions from around the world, mid-century to digital graphics, colour field and gesture, and optical illusions. Every form changes with its seed, stays inside its frame and keeps its shapes clear of the ground in both themes.
+- The deck remembers more recent seeds, so none comes back across several full rounds.
+
 ## 0.11.5
 
 - Artwork stays inside its frame. Framed scenes, portraits and characters are clipped to their picture, so hair, legs, clouds, cliffs, rainbows and rain no longer spill over the edge, and nothing is left as an invisible puzzle piece.
