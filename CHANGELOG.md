@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+- Bauhaus Day is easier to read and calmer to look at. The highlighted row in the Command Palette, suggestions and menus is visible again (it was white on white). Buttons, badges and focus rings are Bauhaus blue instead of red, so they no longer look like errors. Red stays on the cursor and the active tab. The near-black outlines between every part of the window are now soft warm rules. The sidebar is a lighter sky blue with clearer selected and hover rows, the secondary buttons are light, and diffs, hovers, peek and keybinding labels have been restyled to match.
+- Tile Night polish. Selected rows in the sidebar stand out from hovered ones. Find matches have an ochre outline, so the code underneath stays readable. Added lines in diffs are a clear mint instead of olive. The current line is a little easier to spot. ANSI black in the terminal is no longer invisible against the panel. Keybinding labels, inline code and quote blocks are restyled to match the theme.
+
 ## 0.11.4
 
 - README images now load in the editor's extension page: they link straight to raw.githubusercontent.com instead of a GitHub redirect.

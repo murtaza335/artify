@@ -51,6 +51,13 @@ function pairs(p) {
   add('button text', p.onAccent, p.accent);
   add('button text on hover', p.onAccent, p.accentHover);
 
+  // Optional palette keys, checked only when a palette defines them
+  if (p.pickRow) add('picked row in widgets', p.pickRow.fg, p.pickRow.bg);
+  if (p.badge) add('badge text', p.badge.fg, p.badge.bg);
+  if (p.inactiveRow) add('sidebar text on inactive selection', p.sidebarFg, p.inactiveRow);
+  if (p.sidebarHeader) add('sidebar section header', p.sidebarFg, p.sidebarHeader);
+  if (p.secondaryButtonFg) add('secondary button text', p.secondaryButtonFg, p.secondaryButton);
+
   // Status bar items
   add('status bar text', p.status.fg, p.status.bg);
   for (const k of ['remote', 'prominent', 'warning', 'error', 'debugging']) add('status ' + k, p[k].fg, p[k].bg);
