@@ -12,7 +12,7 @@ const { canonicalCategory, compose, formIds } = require('./forms');
 
 const KEY = 'artify.deck';
 // Enough to cover several full rounds of every form, so no seed comes back within them.
-const RECENT_SEEDS = 2000;
+const RECENT_SEEDS = 6000;
 const MINE_SHARE = 0.2; // how often a studio design is dealt when the category is Everything
 const PUZZLE_TRIES = 6;
 

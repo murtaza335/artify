@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.13.0
+
+- New **Patterns** category, in Play and in `artify.explorerShapes`: ornament and textile patterns from around the world, in four families. Islamic and Persian geometry (girih tiles, polygon-in-contact stars, zellige, muqarnas, rosettes, strapwork and lattice screens), patterns of East and South Asia, textiles of Africa, the Americas and Europe, and ornament through the ages. The world patterns from Abstract appear here too.
+- **Geometry** grows with exact tilings (the Cairo tiling, the semi-regular tilings and their duals, pinwheel, chair and sphinx substitutions, an eight-fold quasi-tiling, Robinson triangles, Wang tiles and more) and mathematical curves and fractals (Apollonian gaskets, space-filling curves, epicycles, Chladni figures, hyperbolic discs, Julia and Newton fractals, a torus knot and more).
+- **Abstract** grows with six more families: kinetic and light art, concrete and constructivist art, systems and early computer art, spirit, craft and decoration, simulations of growth, and global modernisms.
+- New forms are merged into rounds already in progress, and the deck remembers more recent seeds so none comes back within several full rounds.
+- Checks for the new forms: every one must draw quickly, change with its seed, stay inside its frame and, in most seeds, play as a puzzle.
+
 ## 0.12.0
 
 - New **Abstract** category, in Play and in `artify.explorerShapes`: abstract art in eight families, each form an original interpretation in the Artify palette. Pioneers of abstraction, hard edge and minimal, generative algorithms, organic and lyrical shapes, pattern traditions from around the world, mid-century to digital graphics, colour field and gesture, and optical illusions. Every form changes with its seed, stays inside its frame and keeps its shapes clear of the ground in both themes.

@@ -42,6 +42,18 @@ const abstractWorld = require('./shapes/abstract-world');
 const abstractGraphic = require('./shapes/abstract-graphic');
 const abstractColorfield = require('./shapes/abstract-colorfield');
 const abstractIllusion = require('./shapes/abstract-illusion');
+const geometryTilings = require('./shapes/geometry-tilings');
+const geometryMath = require('./shapes/geometry-math');
+const patternIslamic = require('./shapes/pattern-islamic');
+const patternAsia = require('./shapes/pattern-asia');
+const patternTextiles = require('./shapes/pattern-textiles');
+const patternOrnament = require('./shapes/pattern-ornament');
+const abstractKinetic = require('./shapes/abstract-kinetic');
+const abstractConcrete = require('./shapes/abstract-concrete');
+const abstractSystems = require('./shapes/abstract-systems');
+const abstractDecorative = require('./shapes/abstract-decorative');
+const abstractGrowth = require('./shapes/abstract-growth');
+const abstractGlobal = require('./shapes/abstract-global');
 
 const CATEGORIES = {
   animals: [animals.cat, animals.dog, animals.songbird, animals.owl, animals.gulls, classic.fish, moreAnimals.fox, moreAnimals.whale, moreAnimals.butterfly, moreAnimals.rabbit, moreAnimals.turtle, moreAnimals.penguin, wildlife.elephant, wildlife.giraffe, wildlife.octopus, wildlife.jellyfish, wildlife.hummingbird, wildlife.flamingo, wildlife.snail, wildlife.bee, wildlife.deer, wildlife.peacock, wildlife.frog, wildlife.origamiCrane],
@@ -52,10 +64,11 @@ const CATEGORIES = {
   weather: [weather.cloudscape, weather.rainstorm, weather.thunderstorm, weather.snowfall, weather.rainbow, weather.windy, weather.fog, weather.sunnyday, weather.tornado, moreScenery.aurora, moreScenery.hurricane, moreScenery.hail, moreScenery.windowRain, moreScenery.heatWave, moreScenery.moonClouds, landscapes.frostWindow, landscapes.dustStorm, landscapes.sunshower, landscapes.monsoon],
   objects: [objects.chair, objects.table, objects.room, objects.corner, objects.clock, objects.teapot, objects.shelf, objects.plant, objects.umbrella, objects.house, objects.lighthouse, objects.bicycle, objects.sailboat, moreObjects.sofa, moreObjects.bed, moreObjects.desk, moreObjects.lightbulb, moreObjects.guitar, moreObjects.hotAirBalloon, moreObjects.camera, moreObjects.door, things.piano, things.typewriter, things.recordPlayer, things.kite, things.bookStack, things.coffeeCup, things.vintageCar, things.train, things.headphones, things.wateringCan],
   faces: [faces.cubistPoster, faces.picasso, faces.splitFace, faces.triadic, faces.kleeGrid, faces.minimalFace, faces.mask, faces.profile, faces.popPanels, faces.facetedFace, faces.lineFace, faces.rubinVase, faces.celestial, moreArt.cubistFace, portraits.robotFace, portraits.mosaicFace, portraits.twinProfiles, portraits.totem, portraits.sleepyFace, portraits.cutoutFace, animeFaces.animeEyes, animeFaces.shoujoPortrait, animeFaces.coolRival, cartoons.bigNoseFace, cartoons.dizzyFace],
-  geometric: [geometric.rings, geometric.star, geometric.cubes, geometric.triangles, classic.gem, classic.tiles, moreArt.truchet, moreArt.voronoi, moreArt.spirograph, moreArt.lissajous, moreArt.moire, moreArt.sierpinski, moreArt.mandala, moreArt.arches, patterns.penrose, patterns.honeycomb, patterns.goldenSpiral, patterns.tangram, patterns.islamicStar, patterns.guilloche, patterns.phyllotaxis, patterns.quilt, patterns.kaleidoscope, patterns.chevrons, patterns.halftone, patterns.impossibleTriangle],
+  geometric: [geometric.rings, geometric.star, geometric.cubes, geometric.triangles, classic.gem, classic.tiles, moreArt.truchet, moreArt.voronoi, moreArt.spirograph, moreArt.lissajous, moreArt.moire, moreArt.sierpinski, moreArt.mandala, moreArt.arches, patterns.penrose, patterns.honeycomb, patterns.goldenSpiral, patterns.tangram, patterns.islamicStar, patterns.guilloche, patterns.phyllotaxis, patterns.quilt, patterns.kaleidoscope, patterns.chevrons, patterns.halftone, patterns.impossibleTriangle, ...Object.values(geometryTilings), ...Object.values(geometryMath)],
+  patterns: [...Object.values(patternIslamic), ...Object.values(patternAsia), ...Object.values(patternTextiles), ...Object.values(patternOrnament), ...Object.values(abstractWorld)],
   anime: [animeFaces.animeEyes, animeFaces.expressionSheet, animeFaces.shoujoPortrait, animeFaces.shonenGrin, animeFaces.coolRival, animeFaces.tearfulFace, animeFaces.angryChibi, animeFaces.sleepyChibi, animeCharacters.spikyHero, animeCharacters.magicalGirl, animeCharacters.schoolUniform, animeCharacters.ninjaRunner, animeCharacters.wanderingRonin, animeCharacters.mechaPilot, animeCharacters.giantRobot, animeCharacters.catEarGirl, animeCharacters.foxSpirit, animeCharacters.oniWarrior, animeCharacters.idolSinger, animeCharacters.oldMaster, animeCharacters.darkLord, animeCharacters.chibiCritter, animeCharacters.kaijuAttack, animeScenes.sakuraSchool, animeScenes.ramenStall, animeScenes.rooftopSunset, animeScenes.trainCrossing, animeScenes.shrineGate, animeScenes.neonAlley, animeScenes.summerFestival, animeScenes.floatingIslands, animeScenes.onsenNight, animeScenes.kotatsuRoom, animeScenes.transformation, animeScenes.mechaHangar, animeScenes.speedBurst, animeScenes.mangaPanels, animeScenes.screentoneGradient, animeScenes.impactFrame,
     cartoons.rubberHose, cartoons.cartoonCat, cartoons.cartoonMouse, cartoons.superheroKid, cartoons.friendlyGhost, cartoons.littleAlien, cartoons.cartoonDino, cartoons.witchOnBroom, cartoons.pirateCaptain, cartoons.monsterUnderBed, cartoons.grumpyCloud, cartoons.happySun, cartoons.bigNoseFace, cartoons.dizzyFace, cartoonScenes.chaseScene, cartoonScenes.anvilDrop, cartoonScenes.desertCliff, cartoonScenes.hillsWithFaces, cartoonScenes.wobblyHouse, cartoonScenes.popBurst, cartoonScenes.squashBall, cartoonScenes.tvTestCard],
-  abstract: [...Object.values(abstractPioneers), ...Object.values(abstractHardedge), ...Object.values(abstractGenerative), ...Object.values(abstractOrganic), ...Object.values(abstractWorld), ...Object.values(abstractGraphic), ...Object.values(abstractColorfield), ...Object.values(abstractIllusion)],
+  abstract: [...Object.values(abstractPioneers), ...Object.values(abstractHardedge), ...Object.values(abstractGenerative), ...Object.values(abstractOrganic), ...Object.values(abstractWorld), ...Object.values(abstractGraphic), ...Object.values(abstractColorfield), ...Object.values(abstractIllusion), ...Object.values(abstractKinetic), ...Object.values(abstractConcrete), ...Object.values(abstractSystems), ...Object.values(abstractDecorative), ...Object.values(abstractGrowth), ...Object.values(abstractGlobal)],
   food: [food.fruitBowl, food.watermelon, food.sushi, food.pizza, food.iceCream, food.cupcake, food.citrusSlices, food.pineapple, food.layeredCake, food.breakfast]
 };
 const ALL = [...new Set(Object.values(CATEGORIES).flat())];
@@ -70,7 +83,7 @@ const canonicalCategory = (category) => CATEGORY_ALIASES[category] || category;
 const formIds = (category) => [...new Set((CATEGORIES[canonicalCategory(category)] || ALL).map((fn) => fn.name))];
 
 const CATEGORY_LABELS = {
-  all: 'Everything', animals: 'Animals', nature: 'Nature', space: 'Space', scenery: 'Scenery', weather: 'Weather', objects: 'Objects', art: 'Art', abstract: 'Abstract', faces: 'Faces', geometric: 'Geometry', food: 'Food', anime: 'Anime & Cartoons', mine: 'My designs'
+  all: 'Everything', animals: 'Animals', nature: 'Nature', space: 'Space', scenery: 'Scenery', weather: 'Weather', objects: 'Objects', art: 'Art', abstract: 'Abstract', faces: 'Faces', geometric: 'Geometry', patterns: 'Patterns', food: 'Food', anime: 'Anime & Cartoons', mine: 'My designs'
 };
 
 // Shards fly together when the host page includes this CSS. `p` marks a piece of the form, `d` marks debris.

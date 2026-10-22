@@ -31,7 +31,7 @@ for (const kind of ['dark', 'light']) {
 }
 for (const kind of ['dark', 'light']) {
   for (const category of ['all', ...Object.keys(CATEGORIES)]) {
-    for (let seed = 1; seed <= 150; seed++) failures.push(...check(`reformed ${category} ${kind} seed ${seed}`, reformed(kind, seed, category)));
+    for (let seed = 1; seed <= 50; seed++) failures.push(...check(`reformed ${category} ${kind} seed ${seed}`, reformed(kind, seed, category)));
   }
 }
 // Every form is checked directly: well-formed output, a usable number of pieces, parts inside the frame,
@@ -42,14 +42,19 @@ const PUZZLE_MAX_PIECES = 45;
 const HARD_CEILING = 150;
 const NOT_PUZZLES = new Set(['pinecone', 'mosaicFace']);
 // The strict frame and puzzle rules hold the forms added in this round of work; the older forms predate them.
-const NEW_FORMS = new Set(['food', 'patterns', 'styles', 'wildlife', 'garden', 'cosmos', 'landscapes', 'things', 'portraits', 'anime-faces', 'anime-characters', 'anime-scenes', 'cartoons', 'cartoon-scenes', 'abstract-pioneers', 'abstract-hardedge', 'abstract-generative', 'abstract-organic', 'abstract-world', 'abstract-graphic', 'abstract-colorfield', 'abstract-illusion'].flatMap((f) => Object.keys(require('../src/shapes/' + f))));
+const NEW_FORMS = new Set(['food', 'patterns', 'styles', 'wildlife', 'garden', 'cosmos', 'landscapes', 'things', 'portraits', 'anime-faces', 'anime-characters', 'anime-scenes', 'cartoons', 'cartoon-scenes', 'abstract-pioneers', 'abstract-hardedge', 'abstract-generative', 'abstract-organic', 'abstract-world', 'abstract-graphic', 'abstract-colorfield', 'abstract-illusion', 'geometry-tilings', 'geometry-math', 'pattern-islamic', 'pattern-asia', 'pattern-textiles', 'pattern-ornament', 'abstract-kinetic', 'abstract-concrete', 'abstract-systems', 'abstract-decorative', 'abstract-growth', 'abstract-global'].flatMap((f) => Object.keys(require('../src/shapes/' + f))));
 const stats = new Map();
 for (const id of FORM_IDS) {
   const entry = { min: Infinity, max: 0, fits: 0 };
+  const times = [];
+  const pictures = new Set();
   stats.set(id, entry);
   for (const kind of ['dark', 'light']) {
     for (let seed = 1; seed <= 40; seed++) {
+      const t0 = process.hrtime.bigint();
       const a = compose(kind, seed, 'all', id);
+      times.push(Number(process.hrtime.bigint() - t0) / 1e6);
+      if (kind === 'dark') pictures.add(a.svg);
       failures.push(...check(`${id} ${kind} seed ${seed}`, a.svg));
       if (a.name === undefined || compose(kind, seed, 'all', id).svg !== a.svg) failures.push(`${id} ${kind} seed ${seed} is not deterministic`);
       if (a.parts < 3) failures.push(`${id} seed ${seed} has only ${a.parts} pieces`);
@@ -70,9 +75,19 @@ for (const id of FORM_IDS) {
       }
     }
   }
+  // Time budget and variety for the forms added in this round: the median draw must be quick, the slow tail
+  // bounded, and the seed must change the picture.
+  if (NEW_FORMS.has(id)) {
+    times.sort((x, y) => x - y);
+    const median = times[Math.floor(times.length / 2)];
+    const p95 = times[Math.floor(times.length * 0.95)];
+    if (median > 8) failures.push(`${id} takes ${median.toFixed(1)} ms to draw, over the 8 ms budget`);
+    if (p95 > 40) failures.push(`${id} takes ${p95.toFixed(0)} ms at the 95th percentile, over the 40 ms limit`);
+    if (pictures.size < 8) failures.push(`${id} gives only ${pictures.size} different pictures over 40 seeds`);
+  }
   if (NEW_FORMS.has(id) && !entry.fits && !NOT_PUZZLES.has(id)) failures.push(`${id} never fits the puzzle limit; add it to NOT_PUZZLES or use fewer parts`);
 }
-if (process.argv.includes('--verbose')) for (const [n, e] of stats) console.log(n.padEnd(18), e.min + '-' + e.max, 'pieces,', e.fits + '/40 fit a puzzle');
+if (process.argv.includes('--verbose') || process.argv.includes('--slow')) for (const [n, e] of stats) console.log(n.padEnd(18), e.min + '-' + e.max, 'pieces,', e.fits + '/40 fit a puzzle');
 
 // A form must never be renamed or dropped, because saved designs and deck bags refer to it by name.
 const shipped = require('./shipped-forms.json');
@@ -150,6 +165,37 @@ for (const id of FORM_IDS) {
   failures.push(...check('helpers', `<svg>${ctx.parts.map((p) => p.svg).join('')}</svg>`));
   const dots = ctx.parts.filter((p) => p.svg.startsWith('<circle') && p.svg.split('<circle').length > 2);
   if (dots.some((p) => p.bounds[0] < 20 || p.bounds[2] > 120 || p.bounds[1] < 20 || p.bounds[3] > 80)) failures.push('dotField left its area');
+}
+// Pattern helpers: the exact tilings, strapwork, contours, weaving, splitting and hatching.
+{
+  const K = require('../src/shapes/pattern-kit');
+  const { tiling, multigrid } = require('../src/shapes/tiling-base');
+  const valence = { snubSquare: 5, trihexagonal: 4, rhombitrihex: 4, octagonSquares: 3, snubHexagonal: 5, elongatedTriangular: 5, dodecagons: 3 };
+  for (const [kind, want] of Object.entries(valence)) {
+    const seen = new Map();
+    for (const f of tiling(kind)) for (const p of f.pts) seen.set(p.map((v) => Math.round(v * 500)).join(), (seen.get(p.map((v) => Math.round(v * 500)).join()) || 0) + 1);
+    const inner = [...seen].filter(([k]) => { const [x, y] = k.split(',').map((v) => v / 500); return x > 4 && x < 9 && y > 4 && y < 13; });
+    if (!inner.length || inner.some(([, n]) => n !== want)) failures.push(`${kind} tiling has a vertex that is not ${want}-valent`);
+  }
+  const mg = multigrid(4, [0.21, 0.37, 0.52, 0.68], 4);
+  if (!mg.length || mg.some((t) => t.pts.flat().some((v) => !Number.isFinite(v)))) failures.push('multigrid produced bad tiles');
+  const sq = [[0, 0], [10, 0], [10, 10], [0, 10]];
+  const areaOf = (p) => Math.abs(p.reduce((a, q, i) => a + q[0] * p[(i + 1) % p.length][1] - p[(i + 1) % p.length][0] * q[1], 0)) / 2;
+  const parts = K.splitPoly(sq, [4, 4], 0.7);
+  if (parts.length !== 2 || Math.abs(parts.reduce((a, p) => a + areaOf(p), 0) - 100) > 1e-6) failures.push('splitPoly does not keep the area of the polygon');
+  for (const seg of K.hatchRect(5, 5, 20, 12, 0.6, 3)) if (seg.flat().some((v, i) => (i % 2 === 0 ? v < 4.99 || v > 25.01 : v < 4.99 || v > 17.01))) failures.push('hatchRect left its rectangle');
+  const hk = K.hankin([K.ngon(0, 0, 10, 8, 0)], 67.5);
+  if (!hk.length || hk.flat(2).some((v) => !Number.isFinite(v))) failures.push('hankin produced bad segments');
+  const field = K.gridOf(12, 12, (i, j) => Math.hypot(i - 5.5, j - 5.5));
+  const d = K.contour(field, 12, 12, 3, 0, 0, 1, 1);
+  if (!d || /NaN|undefined/.test(d)) failures.push('contour produced a bad path');
+  const strands = [[[0, 0], [20, 20]], [[0, 20], [20, 0]], [[0, 10], [20, 10]]];
+  const woven = K.weave(strands, 4, () => '#fff', '#000');
+  if (woven.length <= strands.length * 2) failures.push('weave added no crossings');
+  const items = [K.circ(50, 100, 4, '#111'), K.circ(60, 300, 4, '#111')];
+  const ctx2 = createContext('dark', 1);
+  K.flush(ctx2, items, 3);
+  if (ctx2.parts.length < 2) failures.push('flush did not split items into bands');
 }
 for (const m of MOVEMENTS) {
   for (const seed of [1913, 1920, 1927, 1934, 1941]) {

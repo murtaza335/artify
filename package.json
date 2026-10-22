@@ -2,7 +2,7 @@
   "name": "artify",
   "displayName": "Artify",
   "description": "Color themes and live abstract artwork for VS Code, plus Artify Play: endless shard art, puzzles, paint and a shape studio, all saveable, to play with while you wait.",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "publisher": "murtazabaig",
   "license": "MIT",
   "icon": "images/icon.png",
@@ -140,6 +140,7 @@
             "art",
             "abstract",
             "geometric",
+            "patterns",
             "food",
             "anime"
           ],
@@ -156,6 +157,7 @@
             "Easels, vases and tile mosaics",
             "Abstract art: pioneers, hard edge, generative, organic, world patterns, graphic, colour field and optical illusions",
             "Rings, stars, cubes and triangles",
+            "Tilings, ornament and textile patterns from around the world",
             "Fruit, pizza, sushi, cakes and other things to eat",
             "Original anime and cartoon characters, faces, expressions and scenes, plus manga pages and comic effects"
           ],
